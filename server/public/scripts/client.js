@@ -41,6 +41,9 @@ function fetchGuess() {
       const playerFromServer = response.data;
       const contentDiv = document.querySelector("#playerTableBody");
 
+      if (playerFromServer.length === 0) {
+        return;
+      }
       // TODO: Add the guess results too
       for (const player of playerFromServer) {
         contentDiv.innerHTML += `
@@ -56,6 +59,7 @@ function fetchGuess() {
       // Check all three answers - if they are correct, alert a message
       // showing which player won (and then add a style or something to the page)
       const mostRecentTurn = response.data[response.data.length-1];
+      console.log(mostRecentTurn);
       if(mostRecentTurn.answerOneResult === 'correct') {
         // player 1 won
         alert(`player 1 is the winner!`);
@@ -66,7 +70,8 @@ function fetchGuess() {
       } else if (mostRecentTurn.answerThreeResult === 'correct') {
         // player 3 won
         alert(`player 3 is the winner!`);
-      }
+      } else return;
+  
     }).catch(function (error) {
       console.log(error);
       alert("Something bad happened! Check the console for more details.");
